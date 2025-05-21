@@ -1,18 +1,39 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { connectDatabase } from '../../middlewares/connectDatabase'
+import { connectDatabase } from '../../middlewares/connectDatabase';
 import type { StandardResponse } from '../../types/StandardResponse';
+import type { LoginResponse } from '../../types/LoginResponse';
+import md5 from 'md5';
+import { UserModel } from '../../models/UserModel';
+import jwt from 'jsonwebtoken';
 
 
-const Login = (
+const Login = async (
     req: NextApiRequest,
-    res: NextApiResponse<StandardResponse>
+    res: NextApiResponse<StandardResponse | LoginResponse>
 ) => {
-    if (req.method === 'POST') {
-        const { login, senha } = req.body;
 
-        if (login === 'admin@admin.com' && senha === 'admin@123') {
-            return res.status(200).json({ msg: 'Login realizado com sucesso!' });
+    const { JWT_SECRET } = process.env;
+    if (!JWT_SECRET) {
+        return res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+
+    if (req.method === 'POST') {
+        const { login, password } = req.body;
+
+        const findUsers = await UserModel.find({ email: login, password: md5(password) });
+
+        if (findUsers && findUsers.length > 0) {
+
+            const userLoged = findUsers[0];
+
+            const token = jwt.sign({ _id: userLoged._id }, JWT_SECRET);
+
+            return res.status(200).json({
+                name: userLoged.name,
+                email: userLoged.email,
+                token
+            });
         }
         return res.status(400).json({ error: 'Login ou senha inválidos' });
     }
