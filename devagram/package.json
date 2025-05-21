@@ -9,10 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@cosmicjs/sdk": "^1.5.2",
+    "cosmicjs": "^5.0.5",
     "jsonwebtoken": "^9.0.2",
     "md5": "^2.3.0",
     "mongoose": "^8.15.0",
+    "multer": "^2.0.0",
     "next": "15.3.2",
+    "next-connect": "^0.12.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "types": "^0.1.1"
@@ -21,6 +25,7 @@
     "@eslint/eslintrc": "^3",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/md5": "^2.3.5",
+    "@types/multer": "^1.4.12",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
