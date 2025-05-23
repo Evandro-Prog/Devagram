@@ -1,15 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';
+import md5 from 'md5';
 import { connectDatabase } from '../../middlewares/connectDatabase'
 import type { StandardResponse } from '../../types/StandardResponse';
 import type { UserRequest } from '../../types/UserRequest';
 import { UserModel } from '../../models/UserModel';
-import md5 from 'md5';
 import { upload, uploadImageCosmic } from '../../services/uploadImageCosmic';
-import nc from 'next-connect';
+
 
 
 const handler = nc()
-    .use(upload.single('avatar'))
+    .use(upload.single('file'))
     .post(async (
         req: NextApiRequest,
         res: NextApiResponse<StandardResponse>
@@ -38,7 +39,7 @@ const handler = nc()
                 return res.status(400).json({ error: 'Já existe um usuário cadastrado com esse email.' });
             }
 
-            const image = await uploadImageCosmic(req);            
+            const image = await uploadImageCosmic(req);                 
 
             const userToCreate = {
                 name: user.name,

@@ -1,11 +1,12 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
+import jwt from 'jsonwebtoken';
+import md5 from 'md5';
 import { connectDatabase } from '../../middlewares/connectDatabase';
 import type { StandardResponse } from '../../types/StandardResponse';
 import type { LoginResponse } from '../../types/LoginResponse';
-import md5 from 'md5';
 import { UserModel } from '../../models/UserModel';
-import jwt from 'jsonwebtoken';
+
 
 
 const Login = async (
