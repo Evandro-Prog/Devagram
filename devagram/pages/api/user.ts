@@ -9,6 +9,7 @@ import { UserModel } from '../../models/UserModel';
 
 const handler = nc()
     .use(upload.single('file'))
+    
     .put(async (req: any, res: NextApiResponse<StandardResponse> | any) => {
 
         try {

@@ -7,7 +7,7 @@ import { PublicationModel } from '../../models/PublicationModel';
 
 const feed = async (
     req: NextApiRequest,
-    res: NextApiResponse<StandardResponse | any>) => {
+    res: NextApiResponse<StandardResponse | any[]>) => {
     try {
         if (req.method === 'GET') {
 
@@ -23,9 +23,9 @@ const feed = async (
                 const publications = await PublicationModel.find({ idUser: user._id })
                     //ordena as publicações pela data                    
                     .sort({ date: -1 });
-                    
+
                 // Retorna as publicações
-                return res.status(200).json({ publications });
+                return res.status(200).json(publications);
             }
         }
         return res.status(405).json({ error: 'Método não permitido.' });
