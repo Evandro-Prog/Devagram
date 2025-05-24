@@ -4,6 +4,7 @@ import { PublicationModel } from '../../models/PublicationModel';
 import { UserModel } from '../../models/UserModel';
 import { validateJWT } from '../../middlewares/validateJWT';
 import { connectDatabase } from '../../middlewares/connectDatabase';
+import { corsPolicy } from '../../middlewares/corsPolicy';
 
 const comment = async (
     req: NextApiRequest,
@@ -47,4 +48,4 @@ const comment = async (
     }
 }
 
-export default validateJWT(connectDatabase(comment));
+export default corsPolicy(validateJWT(connectDatabase(comment)));

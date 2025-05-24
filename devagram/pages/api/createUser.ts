@@ -6,6 +6,7 @@ import type { StandardResponse } from '../../types/StandardResponse';
 import type { UserRequest } from '../../types/UserRequest';
 import { UserModel } from '../../models/UserModel';
 import { upload, uploadImageCosmic } from '../../services/uploadImageCosmic';
+import { corsPolicy } from '../../middlewares/corsPolicy';
 
 
 
@@ -39,7 +40,7 @@ const handler = nc()
                 return res.status(400).json({ error: 'Já existe um usuário cadastrado com esse email.' });
             }
 
-            const image = await uploadImageCosmic(req);                 
+            const image = await uploadImageCosmic(req);
 
             const userToCreate = {
                 name: user.name,
@@ -64,4 +65,4 @@ export const config = {
     }
 }
 
-export default connectDatabase(handler);
+export default corsPolicy(connectDatabase(handler));

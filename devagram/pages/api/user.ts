@@ -5,6 +5,7 @@ import { connectDatabase } from '../../middlewares/connectDatabase';
 import type { StandardResponse } from '../../types/StandardResponse';
 import { upload, uploadImageCosmic } from '../../services/uploadImageCosmic';
 import { UserModel } from '../../models/UserModel';
+import { corsPolicy } from '../../middlewares/corsPolicy';
 
 
 const handler = nc()
@@ -75,4 +76,4 @@ export const config = {
 }
 
 
-export default validateJWT(connectDatabase(handler));
+export default corsPolicy(validateJWT(connectDatabase(handler)));

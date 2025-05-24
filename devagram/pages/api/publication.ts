@@ -6,6 +6,7 @@ import { connectDatabase } from '../../middlewares/connectDatabase';
 import { validateJWT } from '../../middlewares/validateJWT';
 import { PublicationModel } from '../../models/PublicationModel';
 import { UserModel } from '../../models/UserModel';
+import { corsPolicy } from '../../middlewares/corsPolicy';
 
 
 const handler = nc()
@@ -64,4 +65,4 @@ export const config = {
     },
 }
 
-export default validateJWT(connectDatabase(handler));
+export default corsPolicy(validateJWT(connectDatabase(handler)));

@@ -6,6 +6,7 @@ import { connectDatabase } from '../../middlewares/connectDatabase';
 import type { StandardResponse } from '../../types/StandardResponse';
 import type { LoginResponse } from '../../types/LoginResponse';
 import { UserModel } from '../../models/UserModel';
+import { corsPolicy } from '../../middlewares/corsPolicy';
 
 
 
@@ -41,4 +42,4 @@ const Login = async (
     return res.status(405).json({ error: 'Metodo não permitido' });
 }
 
-export default connectDatabase(Login);
+export default corsPolicy(connectDatabase(Login));

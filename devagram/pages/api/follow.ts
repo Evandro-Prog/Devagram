@@ -4,6 +4,7 @@ import { connectDatabase } from '../../middlewares/connectDatabase';
 import { validateJWT } from '../../middlewares/validateJWT';
 import { UserModel } from '../../models/UserModel';
 import { FollowModel } from '../../models/FollowModel';
+import { corsPolicy } from '../../middlewares/corsPolicy';
 
 
 
@@ -69,4 +70,4 @@ const follow = async (
     }
 }
 
-export default validateJWT(connectDatabase(follow));
+export default corsPolicy(validateJWT(connectDatabase(follow)));

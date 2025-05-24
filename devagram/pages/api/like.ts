@@ -4,6 +4,7 @@ import { connectDatabase } from '../../middlewares/connectDatabase';
 import { validateJWT } from '../../middlewares/validateJWT';
 import { PublicationModel } from '../../models/PublicationModel';
 import { UserModel } from '../../models/UserModel';
+import { corsPolicy } from '../../middlewares/corsPolicy';
 
 const like = async (
     req: NextApiRequest,
@@ -51,4 +52,4 @@ const like = async (
     }
 }
 
-export default validateJWT(connectDatabase(like));
+export default corsPolicy(validateJWT(connectDatabase(like)));

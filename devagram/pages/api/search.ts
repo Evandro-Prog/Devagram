@@ -3,6 +3,7 @@ import type { StandardResponse } from '../../types/StandardResponse';
 import { connectDatabase } from '../../middlewares/connectDatabase';
 import { validateJWT } from '../../middlewares/validateJWT';
 import { UserModel } from '../../models/UserModel';
+import { corsPolicy } from '../../middlewares/corsPolicy';
 
 const search = async (
     req: NextApiRequest,
@@ -50,4 +51,4 @@ const search = async (
     }
 }
 
-export default validateJWT(connectDatabase(search));
+export default corsPolicy(validateJWT(connectDatabase(search)));

@@ -5,6 +5,7 @@ import type { StandardResponse } from '../../types/StandardResponse';
 import { UserModel } from '../../models/UserModel';
 import { PublicationModel } from '../../models/PublicationModel';
 import { FollowModel } from '../../models/FollowModel';
+import { corsPolicy } from '../../middlewares/corsPolicy';
 
 const feed = async (
     req: NextApiRequest,
@@ -73,4 +74,4 @@ const feed = async (
 }
 
 
-export default validateJWT(connectDatabase(feed));
+export default corsPolicy(validateJWT(connectDatabase(feed)));
