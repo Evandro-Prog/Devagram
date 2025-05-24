@@ -12,22 +12,36 @@ const search = async (
 
         if (req.method === 'GET') {
 
-            const { filter } = req.query;
-            if (!filter || filter.length < 2) {
-                return res.status(400).json({ error: 'Dados infomados inválidos!' });
+            if (req?.query?.id) {
+                const userFound = await UserModel.findById(req?.query?.id);
+                if (!userFound) {
+
+                    return res.status(400).json({ error: 'Usuário não encontrado!' });
+                }
+
+                userFound.password = null;
+                return res.status(200).json(userFound);
+
+            } else {
+                const { filter } = req.query;
+                if (!filter || filter.length < 2) {
+                    return res.status(400).json({ error: 'Dados infomados inválidos!' });
+                }
+
+                const usersFound = await UserModel.find({
+                    $or: [
+                        { name: { $regex: filter, $options: 'i' } },
+                        { email: { $regex: filter, $options: 'i' } }
+                    ]
+                });
+
+                return res.status(200).json([usersFound]);
             }
 
-            const usersFound = await UserModel.find({
-                $or: [
-                    { name: { $regex: filter, $options: 'i' } },
-                    { email: { $regex: filter, $options: 'i' } }
-                ]
-            });
-
-            return res.status(200).json([usersFound]);
+            return res.status(405).json({ error: 'Metódo não permitido.' });
         }
 
-        return res.status(405).json({ error: 'Metódo não permitido.' });
+
 
     } catch (error) {
 
