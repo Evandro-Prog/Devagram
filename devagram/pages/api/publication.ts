@@ -38,11 +38,14 @@ const handler = nc()
 
             const image = await uploadImageCosmic(req);
             const publication = {
-                idUser:  user._id,
+                idUser: user._id,
                 description,
                 image: image.media.url,
                 date: new Date()
             }
+
+            user.publications++;
+            await UserModel.findByIdAndUpdate({ _id: user._id }, user);
 
             await PublicationModel.create(publication);
             return res.status(200).json({ msg: 'Publicação criada com sucesso!' });
